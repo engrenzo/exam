@@ -1,0 +1,85 @@
+import java.util.Stack;
+
+class Creature {
+    String name;
+    int powerLevel;
+
+    public Creature(String name, int powerLevel) {
+        this.name = name;
+        this.powerLevel = powerLevel;
+    }
+}
+
+public class CreatureSorter {
+
+    public static void main(String[] args) {
+        // Create creature objects
+        Creature[] creatures = {
+                new Creature("Dragon", 95),
+                new Creature("Griffin", 88),
+                new Creature("Unicorn", 78),
+                new Creature("Phoenix", 92),
+                new Creature("Centaur", 85)
+        };
+
+        // Bubble Sort
+        bubbleSort(creatures);
+        System.out.println("Bubble Sort:");
+        displayCreatures(creatures);
+
+        // Selection Sort
+        selectionSort(creatures);
+        System.out.println("\nSelection Sort:");
+        displayCreatures(creatures);
+
+        // Stack
+        Stack<Creature> creatureStack = new Stack<>();
+        for (Creature creature : creatures) {
+            creatureStack.push(creature);
+        }
+        System.out.println("\nStack (LIFO):");
+        while (!creatureStack.isEmpty()) {
+            Creature creature = creatureStack.pop();
+            System.out.println(creature.name + " - " + creature.powerLevel);
+        }
+    }
+
+    // Bubble Sort
+    public static void bubbleSort(Creature[] creatures) {
+        int n = creatures.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (creatures[j].powerLevel > creatures[j + 1].powerLevel) {
+                    // Swap creatures
+                    Creature temp = creatures[j];
+                    creatures[j] = creatures[j + 1];
+                    creatures[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    // Selection Sort
+    public static void selectionSort(Creature[] creatures) {
+        int n = creatures.length;
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (creatures[j].powerLevel < creatures[minIndex].powerLevel) {
+                    minIndex = j;
+                }
+            }
+            // Swap the found minimum element with the first element
+            Creature temp = creatures[minIndex];
+            creatures[minIndex] = creatures[i];
+            creatures[i] = temp;
+        }
+    }
+
+    // Display creatures
+    public static void displayCreatures(Creature[] creatures) {
+        for (Creature creature : creatures) {
+            System.out.println(creature.name + " - " + creature.powerLevel);
+        }
+    }
+}
